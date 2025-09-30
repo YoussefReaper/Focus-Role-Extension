@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuroCore - User Activity Test</title>
+    <style>
+        body { 
+            font-family: 'Courier New', monospace; 
+            background: #0a0a0a; 
+            color: aliceblue; 
+            margin: 50px auto; 
+            max-width: 800px; 
+            padding: 20px; 
+        }
+        h1 { color: cyan; text-align: center; }
+        .test-area {
+            background: #1d1d1d;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #333;
+        }
+        .status-box {
+            background: #2d2d2d;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #00ff00;
+        }
+        .inactive { border-left-color: #ff9500; }
+        .invalid { border-left-color: #ff6b6b; }
+        
+        .activity-simulator {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .activity-btn {
+            background-color: #1d1d1d;
+            color: aliceblue;
+            font-weight: 900;
+            font-size: 14px;
+            border: none;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #333;
+        }
+        
+        .activity-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px violet;
+        }
+        
+        .activity-btn:active {
+            background-color: #333;
+        }
+        
+        .timer-controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .control-btn {
+            background-color: #1d1d1d;
+            color: aliceblue;
+            font-weight: 900;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 5px violet;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            background: #2d2d2d;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 AuroCore - User Activity Tracking Test</h1>
+    
+    <div class="test-area">
+        <h2>📊 Current Status</h2>
+        <div id="status-display" class="status-box">
+            Click "Start Test Timer" to begin monitoring
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div style="font-size: 20px; font-weight: bold;" id="focus-time">0s</div>
+                <div>Focus Time</div>
+            </div>
+            <div class="stat-item">
+                <div style="font-size: 20px; font-weight: bold;" id="idle-time">0s</div>
+                <div>Idle Time</div>
+            </div>
+            <div class="stat-item">
+                <div style="font-size: 20px; font-weight: bold;" id="website-status">Unknown</div>
+                <div>Website Valid</div>
+            </div>
+            <div class="stat-item">
+                <div style="font-size: 20px; font-weight: bold;" id="activity-status">Unknown</div>
+                <div>User Active</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="test-area">
+        <h2>🎮 Timer Controls</h2>
+        <div class="timer-controls">
+            <button class="control-btn" onclick="startTestTimer()">Start Test Timer</button>
+            <button class="control-btn" onclick="pauseTimer()">Pause</button>
+            <button class="control-btn" onclick="resumeTimer()">Resume</button>
+            <button class="control-btn" onclick="stopTimer()">Stop</button>
+        </div>
+    </div>
+    
+    <div class="test-area">
+        <h2>👆 Activity Simulator</h2>
+        <p>Interact with these elements to simulate user activity:</p>
+        <div class="activity-simulator">
+            <button class="activity-btn" onclick="simulateClick()">Click Activity</button>
+            <button class="activity-btn" onmousedown="simulateMouseDown()" onmouseup="simulateMouseUp()">Mouse Down/Up</button>
+            <input class="activity-btn" placeholder="Type here to simulate keypress" onkeypress="simulateKeypress()" style="text-align: center;">
+            <button class="activity-btn" onmousemove="simulateMouseMove()" style="height: 60px;">Move mouse over me</button>
+            <button class="activity-btn" ontouchstart="simulateTouch()">Touch Activity</button>
+            <div class="activity-btn" onscroll="simulateScroll()" style="height: 80px; overflow-y: scroll;">
+                <div style="height: 200px;">Scroll inside this box</div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px; text-align: center;">
+            <button class="control-btn" onclick="autoActivity()">Auto Activity (10s)</button>
+            <button class="control-btn" onclick="stopAutoActivity()">Stop Auto Activity</button>
+        </div>
+    </div>
+    
+    <div class="test-area">
+        <h2>📋 Activity Log</h2>
+        <div style="background: #0a0a0a; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 12px; max-height: 200px; overflow-y: auto;" id="activity-log">
+            Activity events will appear here...
+        </div>
+        <button class="control-btn" onclick="clearLog()">Clear Log</button>
+    </div>
+
+    <script>
+        let activityLog = [];
+        let statusUpdateInterval = null;
+        let autoActivityInterval = null;
+        let timerRunning = false;
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            const logMessage = `[${timestamp}] ${message}`;
+            activityLog.push(logMessage);
+            
+            const logElement = document.getElementById('activity-log');
+            logElement.textContent = activityLog.slice(-20).join('\n');
+            logElement.scrollTop = logElement.scrollHeight;
+            
+            console.log(logMessage);
+        }
+        
+        function clearLog() {
+            activityLog = [];
+            document.getElementById('activity-log').textContent = 'Activity log cleared...';
+        }
+        
+        // Timer controls
+        async function startTestTimer() {
+            try {
+                const response = await chrome.runtime.sendMessage({
+                    type: 'start_timer',
+                    role: 'Designer',
+                    sessionMinutes: 5, // 5 minute test
+                    breakMinutes: 1
+                });
+                
+                if (response.success) {
+                    timerRunning = true;
+                    log('✅ Test timer started for Designer role');
+                    startStatusUpdates();
+                } else {
+                    log('❌ Failed to start timer');
+                }
+            } catch (error) {
+                log('❌ Error starting timer: ' + error.message);
+            }
+        }
+        
+        async function pauseTimer() {
+            try {
+                await chrome.runtime.sendMessage({ type: 'pause_timer' });
+                timerRunning = false;
+                log('⏸️ Timer paused');
+                stopStatusUpdates();
+            } catch (error) {
+                log('❌ Error pausing timer: ' + error.message);
+            }
+        }
+        
+        async function resumeTimer() {
+            try {
+                await chrome.runtime.sendMessage({ type: 'resume_timer' });
+                timerRunning = true;
+                log('▶️ Timer resumed');
+                startStatusUpdates();
+            } catch (error) {
+                log('❌ Error resuming timer: ' + error.message);
+            }
+        }
+        
+        async function stopTimer() {
+            try {
+                await chrome.runtime.sendMessage({ type: 'stop_timer' });
+                timerRunning = false;
+                log('⏹️ Timer stopped');
+                stopStatusUpdates();
+            } catch (error) {
+                log('❌ Error stopping timer: ' + error.message);
+            }
+        }
+        
+        // Status monitoring
+        function startStatusUpdates() {
+            if (statusUpdateInterval) return;
+            
+            statusUpdateInterval = setInterval(async () => {
+                try {
+                    const response = await chrome.runtime.sendMessage({ type: 'get_timer_state' });
+                    const state = response.timerState;
+                    
+                    const timeSinceInput = Math.round((Date.now() - state.lastUserInputTime) / 1000);
+                    const isUserActive = timeSinceInput < 120;
+                    const isOnValidSite = state.currentWebsite && state.currentWebsite.includes('figma') || window.location.href.includes('figma');
+                    
+                    // Update status display
+                    const statusEl = document.getElementById('status-display');
+                    statusEl.className = 'status-box';
+                    
+                    if (isOnValidSite && isUserActive) {
+                        statusEl.innerHTML = `✅ <strong>COUNTING TIME</strong> - Valid website + User active`;
+                        statusEl.classList.add('active');
+                    } else if (!isUserActive) {
+                        statusEl.innerHTML = `💤 <strong>NOT COUNTING</strong> - User inactive for ${timeSinceInput}s (2min limit)`;
+                        statusEl.classList.add('inactive');
+                    } else {
+                        statusEl.innerHTML = `⚠️ <strong>NOT COUNTING</strong> - Not on Designer website`;
+                        statusEl.classList.add('invalid');
+                    }
+                    
+                    // Update stats
+                    document.getElementById('focus-time').textContent = state.currentSessionFocusTime + 's';
+                    document.getElementById('idle-time').textContent = timeSinceInput + 's';
+                    document.getElementById('website-status').textContent = isOnValidSite ? 'YES' : 'NO';
+                    document.getElementById('activity-status').textContent = isUserActive ? 'YES' : 'NO';
+                    
+                } catch (error) {
+                    console.error('Status update error:', error);
+                }
+            }, 1000);
+        }
+        
+        function stopStatusUpdates() {
+            if (statusUpdateInterval) {
+                clearInterval(statusUpdateInterval);
+                statusUpdateInterval = null;
+            }
+        }
+        
+        // Activity simulators
+        function simulateClick() {
+            log('👆 Click activity simulated');
+            // This will trigger the content script's click event listener
+        }
+        
+        function simulateMouseDown() {
+            log('👆 Mouse down activity simulated');
+        }
+        
+        function simulateMouseUp() {
+            log('👆 Mouse up activity simulated');
+        }
+        
+        function simulateKeypress() {
+            log('⌨️ Keypress activity simulated');
+        }
+        
+        function simulateMouseMove() {
+            log('🖱️ Mouse move activity simulated');
+        }
+        
+        function simulateTouch() {
+            log('📱 Touch activity simulated');
+        }
+        
+        function simulateScroll() {
+            log('📜 Scroll activity simulated');
+        }
+        
+        function autoActivity() {
+            if (autoActivityInterval) return;
+            
+            log('🤖 Starting auto activity for 10 seconds');
+            let count = 0;
+            
+            autoActivityInterval = setInterval(() => {
+                count++;
+                
+                // Simulate different types of activity
+                const activities = ['click', 'mousemove', 'keypress'];
+                const activity = activities[count % activities.length];
+                
+                // Trigger the actual events
+                const event = new Event(activity, { bubbles: true });
+                document.dispatchEvent(event);
+                
+                log(`🤖 Auto activity ${count}: ${activity}`);
+                
+                if (count >= 10) {
+                    stopAutoActivity();
+                }
+            }, 1000);
+        }
+        
+        function stopAutoActivity() {
+            if (autoActivityInterval) {
+                clearInterval(autoActivityInterval);
+                autoActivityInterval = null;
+                log('🤖 Auto activity stopped');
+            }
+        }
+        
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            log('📄 Activity test page loaded');
+            log('💡 Start the timer and interact with elements to test activity tracking');
+            log('🎯 Timer should only count time when: 1) On valid website 2) User is active');
+            log('⏰ After 2 minutes of inactivity, timer will pause automatically');
+        });
+        
+        // Clean up intervals when page unloads
+        window.addEventListener('beforeunload', () => {
+            stopStatusUpdates();
+            stopAutoActivity();
+        });
+    </script>
+</body>
+</html>

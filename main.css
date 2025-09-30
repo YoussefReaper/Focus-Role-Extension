@@ -1,0 +1,139 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.container {
+    margin: 60px auto;
+    width: 270px;
+    border: 2px solid;
+    position: relative;
+}
+
+.timer {
+    margin: auto auto 50px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    /* border: 6px solid; */
+    text-align: center;
+    line-height: 80px;
+    font-size: 20px;
+    font-weight: 900;
+    background: conic-gradient(#ffffff calc(var(--p) * 1%), #000000 0);
+    --p: 100;
+}
+
+.timer-background {
+    background-color: #000000;
+    /* border: 2px solid; */
+    border-radius: 50%;
+    width: 90px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.session-counter {
+    font-size: 10px;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.time-template {
+    display: flex;
+    flex-direction: column;
+    align-items: first baseline;
+}
+
+.time-template div {
+    margin: 0 0 30px 20px;
+}
+
+.focus-minutes,
+.break-minutes {
+    width: 50px;
+    text-align: center;
+    background-color: #1d1d1d;
+    color: aliceblue;
+    border: none;
+    border-radius: 5px;
+    font-weight: 900;
+    font-size: 15px;
+    padding: 5px;
+    position: absolute;
+    right: 10px;
+    top: 135px;
+}
+
+.break-minutes {
+    top: 180px;
+}
+
+.modes-selector {
+    background-color: #1d1d1d;
+    color: aliceblue;
+    font-weight: 900;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.role {
+    background-color: #1d1d1d;
+    color: aliceblue;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    width: 150px;
+}
+
+.roles-datalist {
+    background-color: #1d1d1d;
+}
+
+.start-timer-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #1d1d1d;
+    border: none;
+    color: aliceblue;
+    font-weight: 900;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.settings-btn,
+.logs-btn {
+    background-color: #1d1d1d;
+    color: aliceblue;
+    font-weight: 700;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.start-timer-btn:hover,
+.settings-btn:hover,
+.logs-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px violet;
+}

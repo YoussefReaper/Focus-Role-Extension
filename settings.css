@@ -1,0 +1,159 @@
+body {
+    background-color: black;
+    color: aliceblue;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 40px;
+}
+
+.settings-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 900;
+    color: aliceblue;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #888;
+    margin: 20px 0 10px 0;
+}
+
+.role-website-section {
+    background-color: #1d1d1d;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border: 1px solid #333;
+}
+
+.role-selection {
+    margin-bottom: 30px;
+}
+
+.role-selection label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.role-select {
+    background-color: #2b2b2b;
+    color: aliceblue;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    width: 300px;
+    cursor: pointer;
+}
+
+.website-list-section {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: #2b2b2b;
+    border-radius: 10px;
+}
+
+.websites-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.website-item {
+    background-color: #1d1d1d;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    position: relative;
+}
+
+.website-item .remove-btn {
+    margin-left: 8px;
+    color: #ff6b6b;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.website-item .remove-btn:hover {
+    color: #ff4757;
+}
+
+.add-website-section {
+    border-top: 1px solid #333;
+    padding-top: 20px;
+}
+
+.website-input {
+    background-color: #2b2b2b;
+    color: aliceblue;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    width: 300px;
+    margin: 10px 10px 10px 0;
+}
+
+.website-input:focus {
+    outline: 2px solid violet;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.add-website-btn,
+.save-btn,
+.reset-btn {
+    padding: 12px 24px;
+    border-radius: 10px;
+    border: none;
+    color: aliceblue;
+    background-color: #1d1d1d;
+    font-weight: 900;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin: 10px 0;
+}
+
+.save-btn {
+    background-color: #28a745;
+}
+
+.reset-btn {
+    background-color: #dc3545;
+}
+
+.add-website-btn:hover,
+.save-btn:hover,
+.reset-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px violet;
+}
+
+.save-btn:hover {
+    box-shadow: 0 0 5px #28a745;
+}
+
+.reset-btn:hover {
+    box-shadow: 0 0 5px #dc3545;
+}

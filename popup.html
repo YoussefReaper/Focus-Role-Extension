@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="pop.css">
+    <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
+    <title>Main</title>
+</head>
+<body>
+    <div class="login">
+        <form class="login-form">
+            <h2 class="title">Login</h2>
+            <input type="email" name="userEmail" placeholder="Enter Email" class="user-email">
+            <input type="password" name="userPassword" placeholder="Enter Password" class="user-password">
+            <button type="submit" class="login-btn" id="login-btn">Log in</button>
+            <button class="signup-link-btn" id="signup-link-btn" type="button">Don't have account? Sign up!</button>
+            <div class="toast">
+                Login Successfully
+            </div>
+        </form>
+    </div>
+    <div class="signup">
+        <form class="signup-form">
+            <h2 class="title">Signup</h2>
+            <input type="email" name="userEmail" placeholder="Enter Email" class="user-email">
+            <input type="password" name="userPassword" placeholder="Enter Password" class="user-password">
+            <button type="submit" class="signup-btn" id="signup-btn">Sign up</button>
+            <button class="login-link-btn" id="login-link-btn" type="button">Have an account already? Log in!</button>
+            <div class="toast">
+                Signup Successfully
+            </div>
+        </form>
+    </div>
+    <div class="main">
+        <div class="container">
+            <div class="timer" id="timer">
+                <div class="timer-background">
+                    <div class="session-counter" id="session-counter">Session #0</div>
+                    <span class="clock" id="clock">25:00</span>
+                    <span class="clock-mode" id="clock-mode">Focus</span>
+                </div>
+            </div>
+            <div class="modes">
+                <div class="time-template">
+                    <div>
+                        <label for="focus-minutes">Session (in min)</label>
+                        <input type="text" value="25" class="focus-minutes" id="focus-minutes">
+                    </div>
+                    <div>
+                        <label for="break-minutes">Break (in min)</label>
+                        <input type="text" value="5" class="break-minutes" id="break-minutes">
+                    </div>
+                </div>
+                <select class="modes-selector" id="modes-selector">
+                    <option value="quickSession">Quick Session</option>
+                    <option value="deepSession">Deep Session</option>
+                    <option value="custom">Custom</option>
+                </select>
+            </div>
+            <label for="role">Choose your role:</label>
+            <input list="roles" id="role" class="role" name="role" placeholder="Type or select a role">
+            <datalist id="roles" class="roles-datalist">
+                <!-- Design & Creativity -->
+                <option value="Designer">Designer</option>
+                <option value="3D Artist">3D Artist</option>
+                <option value="Architect">Architect</option>
+                <option value="Photographer">Photographer</option>
+                <option value="Musician">Musician</option>
+                <option value="Video Editor">Video Editor</option>
+                
+                <!-- Academic & Research -->
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Researcher">Researcher</option>
+                <option value="Scientist">Scientist</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Lawyer">Lawyer</option>
+                
+                <option value="Developer">Developer</option>
+                <option value="AI/ML Engineer">AI/ML Engineer</option>
+                <option value="Data Analyst">Data Analyst</option>
+                <option value="Cybersecurity Specialist">Cybersecurity Specialist</option>
+                <option value="Engineer">Engineer</option>
+                
+                <option value="Entrepreneur">Entrepreneur</option>
+                <option value="Manager">Manager</option>
+                <option value="Consultant">Consultant</option>
+                <option value="Project Manager">Project Manager</option>
+                <option value="HR Specialist">HR Specialist</option>
+                <option value="Salesperson">Salesperson</option>
+                <option value="Investor">Investor</option>
+                <option value="Trader">Trader</option>
+                <option value="Accountant">Accountant</option>
+                
+                <option value="Marketer">Marketer</option>
+                <option value="Writer">Writer</option>
+                <option value="Journalist">Journalist</option>
+                <option value="Translator">Translator</option>
+                <option value="Content Creator">Content Creator</option>
+                
+                <option value="Gamer">Gamer</option>
+                <option value="Streamer">Streamer</option>
+                <option value="Coach">Coach</option>
+                <option value="Athlete">Athlete</option>
+            </datalist>
+            <button class="start-timer-btn" id="start-timer-btn">Start</button>
+            <div class="settings-container">
+                <button class="settings-btn" id="settings-btn">Settings</button>
+                <button class="logs-btn" id="logs-btn">Logs</button>
+            </div>
+        </div>
+    </div>
+    <script src="debug.js"></script>
+    <script src="pop.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="settings.css">
+    <title>Settings</title>
+</head>
+<body>
+    <div class="settings-container">
+        <h1>Settings</h1>
+        
+        <div class="role-website-section">
+            <div class="role-selection">
+                <label for="role-select">Choose a role:</label>
+                <select id="role-select" class="role-select">
+                    <option value="">Select a role...</option>
+                </select>
+            </div>
+            
+            <div class="website-list-section" id="website-list-section" style="display: none;">
+                <h3>Websites for <span id="selected-role-name"></span>:</h3>
+                <div class="websites-list" id="websites-list">
+                    <!-- Websites will be populated here -->
+                </div>
+            </div>
+            
+            <div class="add-website-section">
+                <h3>Add Website to Role</h3>
+                <input type="text" id="website-url" placeholder="Website URL (e.g., https://figma.com)" class="website-input">
+                <input type="text" id="website-name" placeholder="Website Name (e.g., Figma)" class="website-input">
+                <button id="add-website-btn" class="add-website-btn">Add Website</button>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button id="save-all-btn" class="save-btn">Save All Settings</button>
+            <button id="reset-all-btn" class="reset-btn">Reset All Settings</button>
+        </div>
+    </div>
+    
+    <script src="settings.js"></script>
+</body>
+</html>
