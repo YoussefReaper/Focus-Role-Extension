@@ -320,6 +320,14 @@ async function handleSaveAll() {
         // Save to storage
         await chrome.storage.local.set({ customRoleWebsites: customData });
         
+        // Notify background script to reload websites
+        try {
+            await chrome.runtime.sendMessage({ type: 'reload_websites' });
+            console.log('🔄 Notified background script to reload websites');
+        } catch (error) {
+            console.log('⚠️ Could not notify background script:', error);
+        }
+        
         // Show confirmation
         showNotification('✅ Settings saved successfully!', '#28a745');
         
